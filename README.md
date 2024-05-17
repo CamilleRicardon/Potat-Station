@@ -167,19 +167,3 @@ Explication du Code
 
     Fonction displayTempAndHumidity(float temperature, float humidity) :
         Affiche la température et l'humidité sur l'écran LCD.
-
-Ajout de Fonctionnalités
-
-Pour ajouter de nouvelles fonctionnalités à ce projet, vous pouvez envisager les options suivantes :
-
-    Enregistrement des données sur une carte SD :
-        Ajouter un module de carte SD et enregistrer les valeurs de température, d'humidité et de lumière à intervalles réguliers.
-
-    Ajout d'un capteur de mouvement :
-        Utiliser un capteur PIR pour détecter le mouvement et déclencher des actions spécifiques, comme allumer la LED RGB ou afficher un message sur l'écran LCD.
-
-    Contrôle via Bluetooth/WiFi :
-        Ajouter un module Bluetooth (comme HC-05) ou un module WiFi (comme ESP8266) pour contrôler l'appareil à distance et envoyer les données vers une application mobile ou un serveur.
-
-    Amélioration de l'interface utilisateur :
-        Ajouter des boutons pour naviguer dans les différentes informations affichées sur l'écran LCD ou pour activer/désactiver des fonctionnalités.
