@@ -44,7 +44,7 @@ Schéma de Connexion
         A → +5V (rétro-éclairage)
         K → GND (rétro-éclairage)
 
-    CODE
+CODE
       #include <LiquidCrystal.h>
       #include "DHT.h"
 
