@@ -44,88 +44,89 @@ Schéma de Connexion
         A → +5V (rétro-éclairage)
         K → GND (rétro-éclairage)
 
-        #include <LiquidCrystal.h>
-    #include "DHT.h"
+    CODE
+      #include <LiquidCrystal.h>
+      #include "DHT.h"
 
-    #define DHTPIN 6
-    #define DHTTYPE DHT11
-    #define sensorPin A0 // Pin pour la photo-résistance
+      #define DHTPIN 6
+      #define DHTTYPE DHT11
+      #define sensorPin A0 // Pin pour la photo-résistance
 
-    // Pins LED RGB
-    int redpin = 9;
-    int bluepin = 10;
-    int greenpin = 8;
+      // Pins LED RGB
+      int redpin = 9;
+      int bluepin = 10;
+      int greenpin = 8;
 
-    DHT dht(DHTPIN, DHTTYPE);
-    LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+      DHT dht(DHTPIN, DHTTYPE);
+      LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-    void setup() {
-      lcd.begin(16, 2);
-      dht.begin();
-      pinMode(redpin, OUTPUT);
-      pinMode(bluepin, OUTPUT);
-      pinMode(greenpin, OUTPUT);
-    }
-
-    void loop() {
-      float humidity = dht.readHumidity();
-      float temperature = dht.readTemperature();
-      displayTempAndHumidity(temperature, humidity);
-      delay(1000); // Courte pause pour la réactivité
-
-      int lightValue = analogRead(sensorPin);
-      setLEDColor(lightValue);
-    }
-
-    void displayLightning(int value) {
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Light: ");
-      lcd.print(value);
-      lcd.setCursor(0, 1);
-      if (value <= 100) {
-    lcd.print("Tres lumineux");
-      } else if (value > 100 && value <= 200) {
-    lcd.print("Lumineux");
-      } else if (value > 200 && value <= 300) {
-    lcd.print("Peu lumineux");
-    digitalWrite(bluepin, HIGH); // Bleu
-      } else {
-    lcd.print("Pas lumineux");
+      void setup() {
+        lcd.begin(16, 2);
+        dht.begin();
+        pinMode(redpin, OUTPUT);
+        pinMode(bluepin, OUTPUT);
+        pinMode(greenpin, OUTPUT);
       }
-      setLEDColor(value); // Change la couleur de la LED en fonction de la lumière
-    }
 
-    void setLEDColor(int value) {
-      if (value <= 50) {
-    setColor(HIGH, LOW, LOW); // Rouge
-      } else if (value > 50 && value <= 150) {
-    setColor(LOW, HIGH, LOW); // Vert
-      } else if (value > 150 && value <= 250) {
-    setColor(LOW, LOW, HIGH); // Bleu
-      } else {
-    setColor(HIGH, LOW, HIGH); // Magenta
+      void loop() {
+        float humidity = dht.readHumidity();
+        float temperature = dht.readTemperature();
+        displayTempAndHumidity(temperature, humidity);
+        delay(1000); // Courte pause pour la réactivité
+
+        int lightValue = analogRead(sensorPin);
+        setLEDColor(lightValue);
       }
-    }
 
-    void setColor(bool red, bool green, bool blue) {
-      digitalWrite(redpin, red);
-      digitalWrite(greenpin, green);
-      digitalWrite(bluepin, blue);
-    }
+      void displayLightning(int value) {
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Light: ");
+        lcd.print(value);
+        lcd.setCursor(0, 1);
+        if (value <= 100) {
+      lcd.print("Tres lumineux");
+        } else if (value > 100 && value <= 200) {
+      lcd.print("Lumineux");
+        } else if (value > 200 && value <= 300) {
+      lcd.print("Peu lumineux");
+      digitalWrite(bluepin, HIGH); // Bleu
+        } else {
+      lcd.print("Pas lumineux");
+        }
+        setLEDColor(value); // Change la couleur de la LED en fonction de la lumière
+      }
 
-    void displayTempAndHumidity(float temperature, float humidity) {
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Temp: ");
-      lcd.print(temperature);
-      lcd.print(" C");
+      void setLEDColor(int value) {
+        if (value <= 50) {
+      setColor(HIGH, LOW, LOW); // Rouge
+        } else if (value > 50 && value <= 150) {
+      setColor(LOW, HIGH, LOW); // Vert
+        } else if (value > 150 && value <= 250) {
+      setColor(LOW, LOW, HIGH); // Bleu
+        } else {
+      setColor(HIGH, LOW, HIGH); // Magenta
+        }
+      }
 
-      lcd.setCursor(0, 1);
-      lcd.print("Hum: ");
-      lcd.print(humidity);
-      lcd.print("%");
-    }
+      void setColor(bool red, bool green, bool blue) {
+        digitalWrite(redpin, red);
+        digitalWrite(greenpin, green);
+        digitalWrite(bluepin, blue);
+      }
+
+      void displayTempAndHumidity(float temperature, float humidity) {
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Temp: ");
+        lcd.print(temperature);
+        lcd.print(" C");
+
+        lcd.setCursor(0, 1);
+        lcd.print("Hum: ");
+        lcd.print(humidity);
+        lcd.print("%");
+      }
 
 Explication du Code
 
