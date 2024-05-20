@@ -1,7 +1,9 @@
 Documentation du Code Arduino pour Capteur de Température, Humidité et Lumière avec Affichage LCD et LED RGB
+
 Description
 
 Ce projet utilise un capteur DHT11 pour mesurer la température et l'humidité, un photo-résistance pour mesurer la lumière ambiante, et affiche les résultats sur un écran LCD. De plus, une LED RGB change de couleur en fonction de l'intensité lumineuse détectée.
+
 Matériel Nécessaire
 
     Arduino Uno
