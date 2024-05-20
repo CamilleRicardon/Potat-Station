@@ -1,50 +1,50 @@
-Documentation du Code Arduino pour Capteur de Température, Humidité et Lumière avec Affichage LCD et LED RGB
+Arduino Code Documentation for Temperature, Humidity and Light Sensor with LCD and RGB LED Display
 
 Description
 
-Ce projet utilise un capteur DHT11 pour mesurer la température et l'humidité, un photo-résistance pour mesurer la lumière ambiante, et affiche les résultats sur un écran LCD. De plus, une LED RGB change de couleur en fonction de l'intensité lumineuse détectée.
+This project uses a DHT11 sensor to measure temperature and humidity, a photo-resistance to measure ambient light, and displays the results on an LCD screen. In addition, an RGB LED changes color depending on the light intensity detected.
 
-Matériel Nécessaire
+Necessary Equipment
 
     Arduino Uno
-    Capteur DHT11
-    Photo-résistance
-    Résistances diverses
-    Écran LCD 16x2
-    LED RGB
-    Breadboard et fils de connexion
+    Sensor DHT11
+    Photo-resistance
+    Various resistances
+    16x2 LCD screen
+    RGB LED
+    Breadboard and connection wires
 
-Schéma de Connexion
+Connection Scheme
 
-    Capteur DHT11:
-        Pin VCC → 5V
-        Pin GND → GND
-        Pin DATA → Pin numérique 6
+    DHT11 sensor:
+        5V VDC pin
+        GND GND Pin
+        Pin DATA Digital Pin 6
 
-    Photo-résistance:
-        Une broche connectée à +5V
-        L'autre broche connectée à une résistance de 10kΩ, et à la pin analogique A0
-        L'autre extrémité de la résistance connectée à GND
+    Photo-resistance:
+        A pin connected to +5V
+        The other pin connected to a 10kΩ resistor, and the analog pin A0
+        The other end of the resistor connected to GND
 
-    LED RGB:
-        Cathode commune (si LED RGB à cathode commune) connectée à GND
-        Anode rouge connectée à la pin numérique 9 via une résistance de 220Ω
-        Anode verte connectée à la pin numérique 8 via une résistance de 220Ω
-        Anode bleue connectée à la pin numérique 10 via une résistance de 220Ω
+    RGB LED:
+        Common cathode (if RGB LED with common cathode) connected to GND
+        Red anode connected to digital pin 9 via a resistor of 220Ω
+        Green anode connected to digital pin 8 via a resistor of 220Ω
+        Blue anode connected to digital pin 10 via a resistor of 220Ω
 
-    Écran LCD:
-        VSS → GND
-        VDD → +5V
-        V0 → Potentiomètre pour réglage du contraste
-        RS → Pin numérique 12
-        RW → GND
-        E → Pin numérique 11
-        D4 → Pin numérique 5
-        D5 → Pin numérique 4
-        D6 → Pin numérique 3
-        D7 → Pin numérique 2
-        A → +5V (rétro-éclairage)
-        K → GND (rétro-éclairage)
+    LCD screen:
+        VSS GND
+        VDD +5V
+        V0 Potentiometer for contrast adjustment
+        RS Digital Pin 12
+        RW GND
+        E Digital Pin 11
+        D4 Digital Pin 5
+        D5 Digital Pin 4
+        D6 Digital Pin 3
+        D7 Digital Pin 2
+        A +5V (backlight)
+        K GND (backlight)
 
 CODE
 
@@ -121,43 +121,43 @@ CODE
       lcd.print("%");
     }
 
-Explication du Code
+Explanation of the Code
 
-    Bibliothèques:
-        #include <LiquidCrystal.h> : pour contrôler l'écran LCD.
-        #include "DHT.h" : pour utiliser le capteur DHT11.
+    Libraries:
+        #include <LiquidCrystal. h>: to control the LCD screen.
+        #include "DHT. h": to use the DHT11 sensor.
 
-    Définition des Pins:
-        #define DHTPIN 6 : Pin du capteur DHT11.
-        #define DHTTYPE DHT11 : Type de capteur DHT.
-        #define sensorPin A0 : Pin analogique pour la photo-résistance.
+    Definition of Pins:
+        #define DHTPIN 6: DHT11 sensor pin.
+        #define DHTTYPE DHT11: DHT sensor type.
+        #define sensorPin A0: Analog pin for photo-resistance.
 
-    Pins LED RGB :
+    RGB LED pins:
         int redpin = 9;
         int bluepin = 10;
         int greenpin = 8;
 
-    Initialisation :
-        DHT dht(DHTPIN, DHTTYPE);
+    Initialization:
+        dht dht(dhtpin, dhttype);
         LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-    Fonction setup() :
-        Initialise l'écran LCD et le capteur DHT.
-        Définit les pins de la LED RGB comme sorties.
+    Setup() function:
+        Initializes the LCD and DHT sensor.
+        Sets the RGB LED pins as outputs.
 
-    Fonction loop() :
-        Lit la température et l'humidité.
-        Affiche les valeurs sur l'écran LCD.
-        Lit la valeur de lumière et change la couleur de la LED RGB en conséquence.
+    Loop() function:
+        Reads temperature and humidity.
+        Displays the values on the LCD screen.
+        Reads the light value and changes the RGB LED color accordingly.
 
-    Fonction displayLightning(int value) :
-        Affiche le niveau de lumière et une description sur l'écran LCD.
+    displayLightning(int value) function:
+        Displays the light level and a description on the LCD screen.
 
-    Fonction setLEDColor(int value) :
-        Change la couleur de la LED RGB en fonction de la valeur de lumière lue.
+    setLEDColor(int value) function:
+        Changes the color of the RGB LED according to the light value read.
 
-    Fonction setColor(bool red, bool green, bool blue) :
-        Change l'état des pins de la LED RGB.
+    setColor(bool red, bool green, bool blue) function:
+        Changes the state of the RGB LED pins.
 
-    Fonction displayTempAndHumidity(float temperature, float humidity) :
-        Affiche la température et l'humidité sur l'écran LCD.
+    displayTempAndHumidity(float temperature, float humidity) function:
+        Displays temperature and humidity on the LCD.
