@@ -5,6 +5,10 @@
 #define DHTTYPE DHT11
 #define sensorPin 2
 
+//Pressure sensor
+const int hx710bDataPin = 22;
+const int hx710bClockPin = 24;
+
 // RGB LED pins
 int redpin = 9;
 int bluepin = 10;
@@ -14,11 +18,16 @@ DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 void setup() {
+  Serial.begin(9600);
   lcd.begin(16, 2);
   dht.begin();
   pinMode(redpin, OUTPUT);
   pinMode(bluepin, OUTPUT);
   pinMode(greenpin, OUTPUT);
+
+  pinMode(hx710bClockPin, OUTPUT);
+  pinMode(hx710bDataPin, INPUT);
+  digitalWrite(hx710bClockPin, LOW);
 }
 
 void loop() {
@@ -31,6 +40,19 @@ void loop() {
   setLEDColor(lightValue);
   //displayLightning(lightValue);
   //delay(5000);
+  delay(3000);
+
+  long rawPressure = readHX710B();
+  Serial.print("Pressure (raw): ");
+  Serial.println(rawPressure);
+
+  float pressure = convertToPressureInHpa(rawPressure);
+  Serial.print("Pressure: ");
+  Serial.print(pressure);
+  Serial.println(" hPa");
+
+  displayPressure(pressure);
+  delay(3000);
 }
 
 void displayLightning(int value) {
@@ -81,4 +103,46 @@ void displayTempAndHumidity(float temperature, float humidity) {
   lcd.print("Hum: ");
   lcd.print(humidity);
   lcd.print("%");
+}
+
+void displayPressure(float pressure) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Pressure: ");
+  lcd.print(pressure);
+  lcd.setCursor(0, 1);
+  lcd.print(" hPa");
+}
+
+long readHX710B() {
+  long count = 0;
+  while (digitalRead(hx710bDataPin));
+
+  for (int i = 0; i < 24; i++) {
+    digitalWrite(hx710bClockPin, HIGH);
+    delayMicroseconds(1);
+    count = count << 1;
+    digitalWrite(hx710bClockPin, LOW);
+    if (digitalRead(hx710bDataPin)) {
+      count++;
+    }
+    delayMicroseconds(1);
+  }
+
+  digitalWrite(hx710bClockPin, HIGH);
+  delayMicroseconds(1);
+  digitalWrite(hx710bClockPin, LOW);
+  delayMicroseconds(1);
+  digitalWrite(hx710bClockPin, HIGH);
+  delayMicroseconds(1);
+  digitalWrite(hx710bClockPin, LOW);
+
+  count ^= 0x800000;
+
+  return count;
+}
+
+float convertToPressureInHpa(long rawValue) {
+  float pressureFactor = 1.0 / 10000.0;
+  return rawValue * pressureFactor;
 }
